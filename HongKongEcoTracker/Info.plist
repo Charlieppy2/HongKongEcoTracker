@@ -70,13 +70,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location to provide location-based eco services and community features.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to your location to provide location-based eco services and community features.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to camera to scan eco facilities and share eco actions.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to photo library to save and share eco photos.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to camera for AR environmental tracking and eco facility scanning.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location to provide location-based eco services and AR environmental data.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs access to your location to provide location-based eco services and AR environmental data.</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+		<string>arkit</string>
+	</array>
 </dict>
 </plist>

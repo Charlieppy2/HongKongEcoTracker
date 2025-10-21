@@ -48,6 +48,14 @@ struct ContentView: View {
                 }
                 .tag(3)
             
+            // AR Experience
+            ARRealityView()
+                .tabItem {
+                    Image(systemName: "arkit")
+                    Text("AR")
+                }
+                .tag(4)
+            
             // 个人档案
             ProfileView()
                 .environmentObject(dataManager)
@@ -56,7 +64,7 @@ struct ContentView: View {
                     Image(systemName: "person.fill")
                     Text("Profile")
                 }
-                .tag(4)
+                .tag(5)
         }
         .accentColor(.green)
         .preferredColorScheme(.light)
