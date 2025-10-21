@@ -15,7 +15,7 @@ struct ContentView: View {
                 .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "leaf.fill")
-                    Text("Home".localized)
+                    Text("Home")
                 }
                 .tag(0)
             
@@ -24,7 +24,7 @@ struct ContentView: View {
                 .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "chart.line.uptrend.xyaxis")
-                    Text("Live Data".localized)
+                    Text("Live Data")
                 }
                 .tag(1)
             
@@ -34,7 +34,7 @@ struct ContentView: View {
                 .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "trophy.fill")
-                    Text("Challenges".localized)
+                    Text("Challenges")
                 }
                 .tag(2)
             
@@ -44,7 +44,7 @@ struct ContentView: View {
                 .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "person.3.fill")
-                    Text("Community".localized)
+                    Text("Community")
                 }
                 .tag(3)
             
@@ -54,19 +54,12 @@ struct ContentView: View {
                 .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "person.fill")
-                    Text("Profile".localized)
+                    Text("Profile")
                 }
                 .tag(4)
         }
         .accentColor(.green)
         .preferredColorScheme(.light)
-        .onReceive(NotificationCenter.default.publisher(for: .languageChanged)) { _ in
-            // 语言改变时强制刷新UI
-            DispatchQueue.main.async {
-                // 触发UI更新
-                localizationManager.objectWillChange.send()
-            }
-        }
     }
 }
 
@@ -115,13 +108,9 @@ struct CarbonFootprintOverview: View {
                 }
                 .padding(.vertical)
             }
-            .navigationTitle("Eco Tracker".localized)
+            .navigationTitle("Eco Tracker")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    LanguageToggleButton()
-                }
-                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingAddEntry = true }) {
                         Image(systemName: "plus.circle.fill")
