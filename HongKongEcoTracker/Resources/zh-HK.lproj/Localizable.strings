@@ -1,0 +1,110 @@
+/* 
+  Localizable.strings (Traditional Chinese)
+  HongKongEcoTracker
+*/
+
+// MARK: - Tab Titles
+"Home" = "首頁";
+"Live Data" = "實時數據";
+"Challenges" = "挑戰";
+"Community" = "社區";
+"Profile" = "個人檔案";
+
+// MARK: - Home Screen
+"Eco Tracker" = "環保追蹤器";
+"Good Morning!" = "早上好！";
+"Good Afternoon!" = "下午好！";
+"Good Evening!" = "晚上好！";
+"Good Night!" = "晚安！";
+"Let's make Hong Kong greener together! 🌱" = "讓我們一起讓香港更環保！🌱";
+"Hong Kong" = "香港";
+
+// MARK: - Quick Actions
+"Add Entry" = "添加記錄";
+"View Stats" = "查看統計";
+"Challenges" = "挑戰";
+
+// MARK: - Carbon Footprint
+"Today's Carbon Footprint" = "今日碳足跡";
+"Target: 20 kg CO₂ per day" = "目標：每日20公斤CO₂";
+"kg left" = "公斤剩餘";
+"kg over" = "公斤超標";
+"Weekly Trend" = "週趨勢";
+"No data available" = "暫無數據";
+"Start tracking your carbon footprint to see trends" = "開始追蹤您的碳足跡以查看趨勢";
+
+// MARK: - Categories
+"Transportation" = "交通";
+"Energy" = "能源";
+"Food" = "食物";
+"Waste" = "廢物";
+"Category Breakdown" = "分類明細";
+
+// MARK: - Eco Tips
+"Eco Tips" = "環保貼士";
+"Use Public Transport" = "使用公共交通工具";
+"Take MTR or buses to reduce carbon emissions" = "乘坐地鐵或巴士以減少碳排放";
+"Choose Local Food" = "選擇本地食物";
+"Buy locally grown vegetables to reduce transport emissions" = "購買本地種植的蔬菜以減少運輸排放";
+"Save Energy" = "節約能源";
+"Turn off unused appliances and use LED lights" = "關閉未使用的電器並使用LED燈";
+"Recycle More" = "更多回收";
+"Separate waste properly and recycle whenever possible" = "正確分類廢物並盡可能回收";
+
+// MARK: - Add Entry
+"Add Carbon Entry" = "添加碳足跡記錄";
+"Track your daily activities" = "追蹤您的日常活動";
+"Walking Distance" = "步行距離";
+"Public Transport" = "公共交通工具";
+"Private Vehicle" = "私人車輛";
+"Electricity Usage" = "用電量";
+"Gas Usage" = "用氣量";
+"Meat Consumption" = "肉類消費";
+"Vegetables" = "蔬菜";
+"Plastic Waste" = "塑膠廢物";
+"Organic Waste" = "有機廢物";
+"Cancel" = "取消";
+"Save" = "保存";
+
+// MARK: - Live Data
+"Hong Kong Live Data" = "香港實時數據";
+"Real-time environmental information" = "實時環境資訊";
+"Air Quality" = "空氣質素";
+"Temperature" = "溫度";
+"Stations" = "監測站";
+"Active" = "活躍";
+"Map View" = "地圖視圖";
+"Nearby" = "附近";
+"Alerts" = "警報";
+
+// MARK: - Data Categories
+"Environmental Facilities" = "環保設施";
+"Recycling Stations" = "回收站";
+"Green Buildings" = "綠色建築";
+"Environmental Recommendations" = "環保建議";
+
+// MARK: - Weather & Air Quality
+"Weather" = "天氣";
+"Updated" = "更新時間";
+"Real-time monitoring" = "實時監測";
+
+// MARK: - Facilities
+"Opening Hours" = "開放時間";
+"Contact" = "聯絡";
+"Materials" = "材料";
+"Capacity" = "容量";
+"Energy Rating" = "能源評級";
+"Carbon Footprint" = "碳足跡";
+"Certification" = "認證";
+
+// MARK: - Recommendations
+"All Good!" = "一切正常！";
+"No environmental alerts at the moment" = "目前沒有環境警報";
+
+// MARK: - Language Settings
+"Language" = "語言";
+"English" = "English";
+"繁體中文" = "繁體中文";
+"Select Language" = "選擇語言";
+"Language Settings" = "語言設定";
+"Choose your preferred language" = "選擇您偏好的語言";

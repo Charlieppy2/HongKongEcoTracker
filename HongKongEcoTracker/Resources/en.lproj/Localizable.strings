@@ -1,0 +1,110 @@
+/* 
+  Localizable.strings (English)
+  HongKongEcoTracker
+*/
+
+// MARK: - Tab Titles
+"Home" = "Home";
+"Live Data" = "Live Data";
+"Challenges" = "Challenges";
+"Community" = "Community";
+"Profile" = "Profile";
+
+// MARK: - Home Screen
+"Eco Tracker" = "Eco Tracker";
+"Good Morning!" = "Good Morning!";
+"Good Afternoon!" = "Good Afternoon!";
+"Good Evening!" = "Good Evening!";
+"Good Night!" = "Good Night!";
+"Let's make Hong Kong greener together! 🌱" = "Let's make Hong Kong greener together! 🌱";
+"Hong Kong" = "Hong Kong";
+
+// MARK: - Quick Actions
+"Add Entry" = "Add Entry";
+"View Stats" = "View Stats";
+"Challenges" = "Challenges";
+
+// MARK: - Carbon Footprint
+"Today's Carbon Footprint" = "Today's Carbon Footprint";
+"Target: 20 kg CO₂ per day" = "Target: 20 kg CO₂ per day";
+"kg left" = "kg left";
+"kg over" = "kg over";
+"Weekly Trend" = "Weekly Trend";
+"No data available" = "No data available";
+"Start tracking your carbon footprint to see trends" = "Start tracking your carbon footprint to see trends";
+
+// MARK: - Categories
+"Transportation" = "Transportation";
+"Energy" = "Energy";
+"Food" = "Food";
+"Waste" = "Waste";
+"Category Breakdown" = "Category Breakdown";
+
+// MARK: - Eco Tips
+"Eco Tips" = "Eco Tips";
+"Use Public Transport" = "Use Public Transport";
+"Take MTR or buses to reduce carbon emissions" = "Take MTR or buses to reduce carbon emissions";
+"Choose Local Food" = "Choose Local Food";
+"Buy locally grown vegetables to reduce transport emissions" = "Buy locally grown vegetables to reduce transport emissions";
+"Save Energy" = "Save Energy";
+"Turn off unused appliances and use LED lights" = "Turn off unused appliances and use LED lights";
+"Recycle More" = "Recycle More";
+"Separate waste properly and recycle whenever possible" = "Separate waste properly and recycle whenever possible";
+
+// MARK: - Add Entry
+"Add Carbon Entry" = "Add Carbon Entry";
+"Track your daily activities" = "Track your daily activities";
+"Walking Distance" = "Walking Distance";
+"Public Transport" = "Public Transport";
+"Private Vehicle" = "Private Vehicle";
+"Electricity Usage" = "Electricity Usage";
+"Gas Usage" = "Gas Usage";
+"Meat Consumption" = "Meat Consumption";
+"Vegetables" = "Vegetables";
+"Plastic Waste" = "Plastic Waste";
+"Organic Waste" = "Organic Waste";
+"Cancel" = "Cancel";
+"Save" = "Save";
+
+// MARK: - Live Data
+"Hong Kong Live Data" = "Hong Kong Live Data";
+"Real-time environmental information" = "Real-time environmental information";
+"Air Quality" = "Air Quality";
+"Temperature" = "Temperature";
+"Stations" = "Stations";
+"Active" = "Active";
+"Map View" = "Map View";
+"Nearby" = "Nearby";
+"Alerts" = "Alerts";
+
+// MARK: - Data Categories
+"Environmental Facilities" = "Environmental Facilities";
+"Recycling Stations" = "Recycling Stations";
+"Green Buildings" = "Green Buildings";
+"Environmental Recommendations" = "Environmental Recommendations";
+
+// MARK: - Weather & Air Quality
+"Weather" = "Weather";
+"Updated" = "Updated";
+"Real-time monitoring" = "Real-time monitoring";
+
+// MARK: - Facilities
+"Opening Hours" = "Opening Hours";
+"Contact" = "Contact";
+"Materials" = "Materials";
+"Capacity" = "Capacity";
+"Energy Rating" = "Energy Rating";
+"Carbon Footprint" = "Carbon Footprint";
+"Certification" = "Certification";
+
+// MARK: - Recommendations
+"All Good!" = "All Good!";
+"No environmental alerts at the moment" = "No environmental alerts at the moment";
+
+// MARK: - Language Settings
+"Language" = "Language";
+"English" = "English";
+"繁體中文" = "繁體中文";
+"Select Language" = "Select Language";
+"Language Settings" = "Language Settings";
+"Choose your preferred language" = "Choose your preferred language";

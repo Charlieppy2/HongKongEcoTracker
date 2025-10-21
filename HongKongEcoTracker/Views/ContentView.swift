@@ -4,6 +4,7 @@ import Charts
 // MARK: - 主界面
 struct ContentView: View {
     @StateObject private var dataManager = DataManager.shared
+    @StateObject private var localizationManager = LocalizationManager.shared
     @State private var selectedTab = 0
     
     var body: some View {
@@ -11,55 +12,64 @@ struct ContentView: View {
             // 首页 - 碳足迹概览
             CarbonFootprintOverview()
                 .environmentObject(dataManager)
+                .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "leaf.fill")
-                    Text("Home")
+                    Text("Home".localized)
                 }
                 .tag(0)
             
             // 实时数据页面
             RealTimeDataView()
+                .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "chart.line.uptrend.xyaxis")
-                    Text("Live Data")
+                    Text("Live Data".localized)
                 }
                 .tag(1)
             
             // 挑战页面
             ChallengeView()
                 .environmentObject(dataManager)
+                .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "trophy.fill")
-                    Text("Challenges")
+                    Text("Challenges".localized)
                 }
                 .tag(2)
             
             // 社区排名
             CommunityRankingView()
                 .environmentObject(dataManager)
+                .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "person.3.fill")
-                    Text("Community")
+                    Text("Community".localized)
                 }
                 .tag(3)
             
             // 个人档案
             ProfileView()
                 .environmentObject(dataManager)
+                .environmentObject(localizationManager)
                 .tabItem {
                     Image(systemName: "person.fill")
-                    Text("Profile")
+                    Text("Profile".localized)
                 }
                 .tag(4)
         }
         .accentColor(.green)
         .preferredColorScheme(.light)
+        .onReceive(NotificationCenter.default.publisher(for: .languageChanged)) { _ in
+            // 语言改变时刷新UI
+        }
     }
 }
 
 // MARK: - 碳足迹概览
 struct CarbonFootprintOverview: View {
     @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @State private var showingAddEntry = false
     @State private var animateCards = false
     
@@ -101,9 +111,13 @@ struct CarbonFootprintOverview: View {
                 }
                 .padding(.vertical)
             }
-            .navigationTitle("Eco Tracker")
+            .navigationTitle("Eco Tracker".localized)
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    LanguageToggleButton()
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingAddEntry = true }) {
                         Image(systemName: "plus.circle.fill")
@@ -115,6 +129,7 @@ struct CarbonFootprintOverview: View {
             .sheet(isPresented: $showingAddEntry) {
                 AddCarbonEntryView()
                     .environmentObject(dataManager)
+                    .environmentObject(localizationManager)
             }
             .onAppear {
                 animateCards = true
@@ -126,6 +141,7 @@ struct CarbonFootprintOverview: View {
 // MARK: - 欢迎横幅
 struct WelcomeBanner: View {
     @State private var currentTime = Date()
+    @EnvironmentObject var localizationManager: LocalizationManager
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -137,7 +153,7 @@ struct WelcomeBanner: View {
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
                     
-                    Text("Let's make Hong Kong greener together! 🌱")
+                    Text("Let's make Hong Kong greener together! 🌱".localized)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -160,7 +176,7 @@ struct WelcomeBanner: View {
                 
                 Image(systemName: "location")
                     .foregroundColor(.secondary)
-                Text("Hong Kong")
+                Text("Hong Kong".localized)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -183,13 +199,13 @@ struct WelcomeBanner: View {
         let hour = Calendar.current.component(.hour, from: currentTime)
         switch hour {
         case 5..<12:
-            return "Good Morning!"
+            return "Good Morning!".localized
         case 12..<17:
-            return "Good Afternoon!"
+            return "Good Afternoon!".localized
         case 17..<22:
-            return "Good Evening!"
+            return "Good Evening!".localized
         default:
-            return "Good Night!"
+            return "Good Night!".localized
         }
     }
 }
@@ -202,21 +218,21 @@ struct QuickActionButtons: View {
         HStack(spacing: 16) {
             QuickActionButton(
                 icon: "plus.circle.fill",
-                title: "Add Entry",
+                title: "Add Entry".localized,
                 color: .green,
                 action: { showingAddEntry = true }
             )
             
             QuickActionButton(
                 icon: "chart.bar.fill",
-                title: "View Stats",
+                title: "View Stats".localized,
                 color: .blue,
                 action: { /* Navigate to stats */ }
             )
             
             QuickActionButton(
                 icon: "trophy.fill",
-                title: "Challenges",
+                title: "Challenges".localized,
                 color: .orange,
                 action: { /* Navigate to challenges */ }
             )
@@ -260,11 +276,11 @@ struct TodayCarbonCard: View {
         VStack(spacing: 16) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Today's Carbon Footprint")
+                    Text("Today's Carbon Footprint".localized)
                         .font(.headline)
                         .fontWeight(.semibold)
                     
-                    Text("Target: 20 kg CO₂ per day")
+                    Text("Target: 20 kg CO₂ per day".localized)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -317,9 +333,9 @@ struct TodayCarbonCard: View {
         let current = carbonFootprint.totalEmission
         
         if current <= target {
-            return String(format: "%.1f kg left", target - current)
+            return String(format: "%.1f kg left".localized, target - current)
         } else {
-            return String(format: "%.1f kg over", current - target)
+            return String(format: "%.1f kg over".localized, current - target)
         }
     }
     
