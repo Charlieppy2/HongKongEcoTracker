@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - 挑战页面
+// MARK: - Challenge Page
 struct ChallengeView: View {
     @EnvironmentObject var dataManager: DataManager
     @State private var selectedCategory: EcoChallenge.ChallengeCategory?
@@ -8,7 +8,7 @@ struct ChallengeView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // 分类筛选器
+                // Category filter
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         CategoryFilterButton(
@@ -31,7 +31,7 @@ struct ChallengeView: View {
                 }
                 .padding(.vertical, 8)
                 
-                // 挑战列表
+                // Challenge list
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         ForEach(filteredChallenges) { challenge in
@@ -54,7 +54,7 @@ struct ChallengeView: View {
     }
 }
 
-// MARK: - 分类筛选按钮
+// MARK: - Category Filter Button
 struct CategoryFilterButton: View {
     let title: String
     let isSelected: Bool
@@ -74,7 +74,7 @@ struct CategoryFilterButton: View {
     }
 }
 
-// MARK: - 挑战卡片
+// MARK: - Challenge Card
 struct ChallengeCard: View {
     let challenge: EcoChallenge
     @EnvironmentObject var dataManager: DataManager
@@ -83,7 +83,7 @@ struct ChallengeCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                // 分类图标
+                // Category icon
                 CategoryIcon(category: challenge.category)
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -99,7 +99,7 @@ struct ChallengeCard: View {
                 
                 Spacer()
                 
-                // 积分显示
+                // Points display
                 VStack {
                     Text("\(challenge.points)")
                         .font(.title2)
@@ -112,7 +112,7 @@ struct ChallengeCard: View {
                 }
             }
             
-            // 进度条（如果挑战已开始）
+            // Progress bar (if challenge has started)
             if let startDate = challenge.startDate, let endDate = challenge.endDate {
                 ChallengeProgressView(
                     startDate: startDate,
@@ -121,7 +121,7 @@ struct ChallengeCard: View {
                 )
             }
             
-            // 操作按钮
+            // Action buttons
             HStack {
                 if challenge.isCompleted {
                     HStack {
@@ -166,7 +166,7 @@ struct ChallengeCard: View {
     }
 }
 
-// MARK: - 分类图标
+// MARK: - Category Icon
 struct CategoryIcon: View {
     let category: EcoChallenge.ChallengeCategory
     
@@ -200,7 +200,7 @@ struct CategoryIcon: View {
     }
 }
 
-// MARK: - 挑战进度视图
+// MARK: - Challenge Progress View
 struct ChallengeProgressView: View {
     let startDate: Date
     let endDate: Date
@@ -240,7 +240,7 @@ struct ChallengeProgressView: View {
     }
 }
 
-// MARK: - 挑战详情视图
+// MARK: - Challenge Detail View
 struct ChallengeDetailView: View {
     let challenge: EcoChallenge
     @EnvironmentObject var dataManager: DataManager
@@ -250,7 +250,7 @@ struct ChallengeDetailView: View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    // 挑战信息
+                    // Challenge information
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             CategoryIcon(category: challenge.category)
@@ -277,7 +277,7 @@ struct ChallengeDetailView: View {
                     .cornerRadius(12)
                     .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
                     
-                    // 挑战详情
+                    // Challenge details
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Challenge Details")
                             .font(.headline)
@@ -318,7 +318,7 @@ struct ChallengeDetailView: View {
     }
 }
 
-// MARK: - 详情行
+// MARK: - Detail Row
 struct DetailRow: View {
     let title: String
     let value: String
@@ -338,7 +338,7 @@ struct DetailRow: View {
     }
 }
 
-// MARK: - 日期格式化器扩展
+// MARK: - Date Formatter Extension
 extension DateFormatter {
     static let shortDate: DateFormatter = {
         let formatter = DateFormatter()

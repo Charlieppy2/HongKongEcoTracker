@@ -1,7 +1,7 @@
 import SwiftUI
 import CoreLocation
 
-// MARK: - 实时数据视图
+// MARK: - Real-time Data View
 struct RealTimeDataView: View {
     @StateObject private var environmentalService = RealTimeEnvironmentalService()
     @StateObject private var locationManager = LocationManager()
@@ -13,13 +13,13 @@ struct RealTimeDataView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 24) {
-                    // 实时数据概览
+                    // Real-time data overview
                     RealTimeOverviewCard()
                         .padding(.horizontal)
                         .scaleEffect(animateCards ? 1.0 : 0.9)
                         .animation(.spring(response: 0.6, dampingFraction: 0.8), value: animateCards)
                     
-                    // 顶部实时数据卡片
+                    // Top real-time data cards
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
                             if let airQuality = environmentalService.airQualityData {
@@ -41,21 +41,21 @@ struct RealTimeDataView: View {
                         .padding(.horizontal)
                     }
                     
-                    // 快速访问按钮
+                    // Quick access buttons
                     QuickAccessButtons(showingMap: $showingMap)
                         .padding(.horizontal)
                     
-                    // 标签页选择器
+                    // Tab selector
                     VStack(spacing: 16) {
-                        Picker("数据类别", selection: $selectedTab) {
-                            Text("环保设施").tag(0)
-                            Text("回收站").tag(1)
-                            Text("绿色建筑").tag(2)
-                            Text("环保建议").tag(3)
+                        Picker("Data Category", selection: $selectedTab) {
+                            Text("Eco Facilities").tag(0)
+                            Text("Recycling Stations").tag(1)
+                            Text("Green Buildings").tag(2)
+                            Text("Eco Recommendations").tag(3)
                         }
                         .pickerStyle(.segmented)
                         
-                        // 内容区域
+                        // Content area
                         TabView(selection: $selectedTab) {
                             EcoFacilitiesView(facilities: environmentalService.ecoFacilities)
                                 .tag(0)
@@ -104,7 +104,7 @@ struct RealTimeDataView: View {
     }
 }
 
-// MARK: - 实时数据概览卡片
+// MARK: - Real-time Data Overview Card
 struct RealTimeOverviewCard: View {
     var body: some View {
         VStack(spacing: 16) {
@@ -185,7 +185,7 @@ struct OverviewStat: View {
     }
 }
 
-// MARK: - 快速访问按钮
+// MARK: - Quick Access Buttons
 struct QuickAccessButtons: View {
     @Binding var showingMap: Bool
     
@@ -243,7 +243,7 @@ struct QuickAccessButton: View {
     }
 }
 
-// MARK: - 空气质量卡片
+// MARK: - Air Quality Card
 struct AirQualityCard: View {
     let airQuality: AirQualityData
     
@@ -315,7 +315,7 @@ struct AirQualityCard: View {
     }
 }
 
-// MARK: - 天气卡片
+// MARK: - Weather Card
 struct WeatherCard: View {
     let weather: WeatherData
     
@@ -395,7 +395,7 @@ struct WeatherCard: View {
     }
 }
 
-// MARK: - 环境监测站卡片
+// MARK: - Environmental Stations Card
 struct EnvironmentalStationsCard: View {
     let stations: [EnvironmentalStation]
     
@@ -470,7 +470,7 @@ struct EnvironmentalStationsCard: View {
     }
 }
 
-// MARK: - 环保设施视图
+// MARK: - Eco Facilities View
 struct EcoFacilitiesView: View {
     let facilities: [EcoFacility]
     
@@ -568,7 +568,7 @@ struct EcoFacilityCard: View {
     }
 }
 
-// MARK: - 回收站视图
+// MARK: - Recycling Stations View
 struct RecyclingStationsView: View {
     let stations: [RecyclingStation]
     
@@ -660,7 +660,7 @@ struct RecyclingStationCard: View {
     }
 }
 
-// MARK: - 绿色建筑视图
+// MARK: - Green Buildings View
 struct GreenBuildingsView: View {
     let buildings: [GreenBuilding]
     
@@ -760,7 +760,7 @@ struct GreenBuildingCard: View {
     }
 }
 
-// MARK: - 环保建议视图
+// MARK: - Eco Recommendations View
 struct EcoRecommendationsView: View {
     let recommendations: [EcoRecommendation]
     
@@ -844,7 +844,7 @@ struct EcoRecommendationCard: View {
     }
 }
 
-// MARK: - 环保地图视图 (简化为列表)
+// MARK: - Environmental Map View (Simplified as List)
 struct EnvironmentalMapView: View {
     let facilities: [EcoFacility]
     let recyclingStations: [RecyclingStation]
@@ -854,16 +854,16 @@ struct EnvironmentalMapView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // 地图类型选择器
-                Picker("地图类型", selection: $selectedMapType) {
-                    Text("环保设施").tag(0)
-                    Text("回收站").tag(1)
-                    Text("绿色建筑").tag(2)
+                // Map type selector
+                Picker("Map Type", selection: $selectedMapType) {
+                    Text("Eco Facilities").tag(0)
+                    Text("Recycling Stations").tag(1)
+                    Text("Green Buildings").tag(2)
                 }
                 .pickerStyle(.segmented)
                 .padding()
                 
-                // 简化的地图视图 - 显示列表而不是实际地图
+                // Simplified map view - shows list instead of actual map
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(currentItems) { item in
@@ -878,7 +878,7 @@ struct EnvironmentalMapView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-                        // 关闭地图
+                        // Close map
                     }
                 }
             }
@@ -973,7 +973,7 @@ struct MapItemRow: View {
     }
 }
 
-// MARK: - 位置管理器
+// MARK: - Location Manager
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     @Published var location: CLLocation?
@@ -1012,7 +1012,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 }
 
-// MARK: - 预览
+// MARK: - Preview
 struct RealTimeDataView_Previews: PreviewProvider {
     static var previews: some View {
         RealTimeDataView()

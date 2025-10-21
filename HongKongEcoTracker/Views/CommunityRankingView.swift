@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - 社区排名视图
+// MARK: - Community Ranking View
 struct CommunityRankingView: View {
     @EnvironmentObject var dataManager: DataManager
     @State private var selectedDistrict = "All Districts"
@@ -10,7 +10,7 @@ struct CommunityRankingView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // 地区筛选器
+                // District filter
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(districts, id: \.self) { district in
@@ -26,7 +26,7 @@ struct CommunityRankingView: View {
                 }
                 .padding(.vertical, 8)
                 
-                // 排名列表
+                // Ranking list
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(filteredRankings) { ranking in
@@ -53,7 +53,7 @@ struct CommunityRankingView: View {
     @StateObject private var rankingService = CommunityRankingService()
 }
 
-// MARK: - 地区筛选按钮
+// MARK: - District Filter Button
 struct DistrictFilterButton: View {
     let title: String
     let isSelected: Bool
@@ -73,13 +73,13 @@ struct DistrictFilterButton: View {
     }
 }
 
-// MARK: - 排名卡片
+// MARK: - Ranking Card
 struct RankingCard: View {
     let ranking: CommunityRanking
     
     var body: some View {
         HStack(spacing: 16) {
-            // 排名
+            // Ranking
             VStack {
                 Text("\(ranking.rank)")
                     .font(.title2)
@@ -94,7 +94,7 @@ struct RankingCard: View {
             }
             .frame(width: 50)
             
-            // 用户头像
+            // User avatar
             AsyncImage(url: URL(string: ranking.avatar ?? "")) { image in
                 image
                     .resizable()
@@ -107,7 +107,7 @@ struct RankingCard: View {
             .frame(width: 50, height: 50)
             .clipShape(Circle())
             
-            // 用户信息
+            // User information
             VStack(alignment: .leading, spacing: 4) {
                 Text(ranking.username)
                     .font(.headline)
@@ -130,7 +130,7 @@ struct RankingCard: View {
             
             Spacer()
             
-            // 积分
+            // Points
             VStack(alignment: .trailing) {
                 Text("\(ranking.totalPoints)")
                     .font(.title3)
@@ -167,7 +167,7 @@ struct RankingCard: View {
     }
 }
 
-// MARK: - 社区排名服务
+// MARK: - Community Ranking Service
 class CommunityRankingService: ObservableObject {
     @Published var rankings: [CommunityRanking] = []
     
@@ -176,7 +176,7 @@ class CommunityRankingService: ObservableObject {
     }
     
     func refreshRankings() async {
-        // 模拟网络请求延迟
+        // Simulate network request delay
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         
         await MainActor.run {
@@ -220,7 +220,7 @@ class CommunityRankingService: ObservableObject {
     }
 }
 
-// MARK: - 个人档案视图
+// MARK: - Profile View
 struct ProfileView: View {
     @EnvironmentObject var dataManager: DataManager
     @State private var showingSettings = false
@@ -229,16 +229,16 @@ struct ProfileView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // 用户信息卡片
+                    // User information card
                     UserInfoCard(profile: dataManager.userProfile)
                     
-                    // 成就徽章
+                    // Achievement badges
                     AchievementsSection(profile: dataManager.userProfile)
                     
-                    // 统计数据
+                    // Statistics
                     StatisticsSection(profile: dataManager.userProfile)
                     
-                    // 环保目标
+                    // Eco goals
                     EcoGoalsSection()
                     
                     Spacer()
@@ -260,13 +260,13 @@ struct ProfileView: View {
     }
 }
 
-// MARK: - 用户信息卡片
+// MARK: - User Info Card
 struct UserInfoCard: View {
     let profile: UserEcoProfile?
     
     var body: some View {
         VStack(spacing: 16) {
-            // 头像和基本信息
+            // Avatar and basic information
             VStack(spacing: 12) {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 80))
@@ -284,7 +284,7 @@ struct UserInfoCard: View {
                 }
             }
             
-            // 积分和等级
+            // Points and level
             HStack(spacing: 30) {
                 VStack {
                     Text("\(profile?.totalPoints ?? 0)")
@@ -327,7 +327,7 @@ struct UserInfoCard: View {
     }
 }
 
-// MARK: - 成就徽章部分
+// MARK: - Achievements Section
 struct AchievementsSection: View {
     let profile: UserEcoProfile?
     
@@ -353,7 +353,7 @@ struct AchievementsSection: View {
     }
 }
 
-// MARK: - 徽章卡片
+// MARK: - Badge Card
 struct BadgeCard: View {
     let badge: EcoBadge
     
@@ -375,7 +375,7 @@ struct BadgeCard: View {
     }
 }
 
-// MARK: - 统计数据部分
+// MARK: - Statistics Section
 struct StatisticsSection: View {
     let profile: UserEcoProfile?
     
@@ -398,7 +398,7 @@ struct StatisticsSection: View {
     }
 }
 
-// MARK: - 统计行
+// MARK: - Statistics Row
 struct StatisticRow: View {
     let title: String
     let value: String
@@ -418,7 +418,7 @@ struct StatisticRow: View {
     }
 }
 
-// MARK: - 环保目标部分
+// MARK: - Eco Goals Section
 struct EcoGoalsSection: View {
     @State private var weeklyGoal: Double = 15.0
     @State private var monthlyGoal: Double = 60.0
@@ -452,7 +452,7 @@ struct EcoGoalsSection: View {
     }
 }
 
-// MARK: - 目标进度视图
+// MARK: - Goal Progress View
 struct GoalProgressView: View {
     let title: String
     let current: Double
@@ -483,7 +483,7 @@ struct GoalProgressView: View {
     }
 }
 
-// MARK: - 设置视图
+// MARK: - Settings View
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     
