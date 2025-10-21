@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - 挑战页面
 struct ChallengeView: View {
-    @EnvironmentObject var ecoService: EcoChallengeService
+    @EnvironmentObject var dataManager: DataManager
     @State private var selectedCategory: EcoChallenge.ChallengeCategory?
     
     var body: some View {
@@ -12,7 +12,7 @@ struct ChallengeView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         CategoryFilterButton(
-                            title: "全部",
+                            title: "All Categories",
                             isSelected: selectedCategory == nil
                         ) {
                             selectedCategory = nil
@@ -36,21 +36,21 @@ struct ChallengeView: View {
                     LazyVStack(spacing: 16) {
                         ForEach(filteredChallenges) { challenge in
                             ChallengeCard(challenge: challenge)
-                                .environmentObject(ecoService)
+                                .environmentObject(dataManager)
                         }
                     }
                     .padding()
                 }
             }
-            .navigationTitle("环保挑战")
+            .navigationTitle("Eco Challenges")
         }
     }
     
     private var filteredChallenges: [EcoChallenge] {
         if let category = selectedCategory {
-            return ecoService.challenges.filter { $0.category == category }
+            return dataManager.challenges.filter { $0.category == category }
         }
-        return ecoService.challenges
+        return dataManager.challenges
     }
 }
 
@@ -77,7 +77,7 @@ struct CategoryFilterButton: View {
 // MARK: - 挑战卡片
 struct ChallengeCard: View {
     let challenge: EcoChallenge
-    @EnvironmentObject var ecoService: EcoChallengeService
+    @EnvironmentObject var dataManager: DataManager
     @State private var showingDetail = false
     
     var body: some View {
@@ -106,7 +106,7 @@ struct ChallengeCard: View {
                         .fontWeight(.bold)
                         .foregroundColor(.green)
                     
-                    Text("积分")
+                    Text("points")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -127,20 +127,20 @@ struct ChallengeCard: View {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
-                        Text("已完成")
+                        Text("Completed")
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .foregroundColor(.green)
                     }
                 } else if challenge.startDate != nil {
-                    Button("查看进度") {
+                    Button("View Progress") {
                         showingDetail = true
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.small)
                 } else {
-                    Button("开始挑战") {
-                        ecoService.startChallenge(challenge)
+                    Button("Start Challenge") {
+                        dataManager.startChallenge(challenge)
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.small)
@@ -148,7 +148,7 @@ struct ChallengeCard: View {
                 
                 Spacer()
                 
-                Button("详情") {
+                Button("Details") {
                     showingDetail = true
                 }
                 .buttonStyle(.bordered)
@@ -161,7 +161,7 @@ struct ChallengeCard: View {
         .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
         .sheet(isPresented: $showingDetail) {
             ChallengeDetailView(challenge: challenge)
-                .environmentObject(ecoService)
+                .environmentObject(dataManager)
         }
     }
 }
@@ -220,7 +220,7 @@ struct ChallengeProgressView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(isCompleted ? "挑战完成" : "进行中")
+                Text(isCompleted ? "Challenge Completed" : "In Progress")
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(isCompleted ? .green : .blue)
@@ -228,7 +228,7 @@ struct ChallengeProgressView: View {
                 Spacer()
                 
                 if !isCompleted {
-                    Text("剩余 \(remainingDays) 天")
+                    Text("remaining \(remainingDays) days")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -243,7 +243,7 @@ struct ChallengeProgressView: View {
 // MARK: - 挑战详情视图
 struct ChallengeDetailView: View {
     let challenge: EcoChallenge
-    @EnvironmentObject var ecoService: EcoChallengeService
+    @EnvironmentObject var dataManager: DataManager
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -279,40 +279,37 @@ struct ChallengeDetailView: View {
                     
                     // 挑战详情
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("挑战详情")
+                        Text("Challenge Details")
                             .font(.headline)
                             .fontWeight(.semibold)
                         
-                        DetailRow(title: "积分奖励", value: "\(challenge.points) 积分")
-                        DetailRow(title: "挑战时长", value: "\(challenge.duration) 天")
+                        DetailRow(title: "Points Reward", value: "\(challenge.points) points")
+                        DetailRow(title: "Duration", value: "\(challenge.duration) days")
                         
                         if let startDate = challenge.startDate {
-                            DetailRow(title: "开始时间", value: DateFormatter.shortDate.string(from: startDate))
+                            DetailRow(title: "Start Time", value: DateFormatter.shortDate.string(from: startDate))
                         }
                         
                         if let endDate = challenge.endDate {
-                            DetailRow(title: "结束时间", value: DateFormatter.shortDate.string(from: endDate))
+                            DetailRow(title: "End Time", value: DateFormatter.shortDate.string(from: endDate))
                         }
                         
-                        DetailRow(title: "状态", value: challenge.isCompleted ? "已完成" : "进行中")
+                        DetailRow(title: "Status", value: challenge.isCompleted ? "Completed" : "In Progress")
                     }
                     .padding()
                     .background(Color(.systemBackground))
                     .cornerRadius(12)
                     .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
                     
-                    // 环保建议
-                    EcoTipsSection(category: challenge.category)
-                    
                     Spacer()
                 }
                 .padding()
             }
-            .navigationTitle("挑战详情")
+            .navigationTitle("Challenge Details")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("关闭") {
+                    Button("Close") {
                         dismiss()
                     }
                 }
@@ -341,75 +338,6 @@ struct DetailRow: View {
     }
 }
 
-// MARK: - 环保建议部分
-struct EcoTipsSection: View {
-    let category: EcoChallenge.ChallengeCategory
-    
-    private var tips: [String] {
-        switch category {
-        case .transportation:
-            return [
-                "选择步行或骑自行车短途出行",
-                "使用公共交通代替私家车",
-                "拼车减少单人出行",
-                "选择电动车或混合动力车"
-            ]
-        case .energy:
-            return [
-                "关闭不使用的电器",
-                "使用LED节能灯泡",
-                "调节空调温度到26°C",
-                "选择节能家电"
-            ]
-        case .food:
-            return [
-                "选择本地和季节性食材",
-                "减少肉类消费",
-                "避免食物浪费",
-                "选择有机食品"
-            ]
-        case .waste:
-            return [
-                "减少使用一次性用品",
-                "分类回收废物",
-                "选择可重复使用的产品",
-                "购买包装较少的商品"
-            ]
-        case .lifestyle:
-            return [
-                "选择环保的生活方式",
-                "支持环保品牌",
-                "参与环保活动",
-                "教育他人环保知识"
-            ]
-        }
-    }
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("环保建议")
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            ForEach(tips, id: \.self) { tip in
-                HStack(alignment: .top, spacing: 8) {
-                    Image(systemName: "lightbulb.fill")
-                        .foregroundColor(.yellow)
-                        .font(.caption)
-                    
-                    Text(tip)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-            }
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
-    }
-}
-
 // MARK: - 日期格式化器扩展
 extension DateFormatter {
     static let shortDate: DateFormatter = {
@@ -422,5 +350,5 @@ extension DateFormatter {
 
 #Preview {
     ChallengeView()
-        .environmentObject(EcoChallengeService())
+        .environmentObject(DataManager.shared)
 }

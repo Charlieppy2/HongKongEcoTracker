@@ -2,10 +2,10 @@ import SwiftUI
 
 // MARK: - 社区排名视图
 struct CommunityRankingView: View {
-    @StateObject private var rankingService = CommunityRankingService()
-    @State private var selectedDistrict = "全部"
+    @EnvironmentObject var dataManager: DataManager
+    @State private var selectedDistrict = "All Districts"
     
-    let districts = ["全部", "中西区", "湾仔区", "东区", "南区", "油尖旺区", "深水埗区", "九龙城区", "黄大仙区", "观塘区", "荃湾区", "屯门区", "元朗区", "北区", "大埔区", "沙田区", "西贡区", "葵青区", "离岛区"]
+    let districts = ["All Districts", "Central & Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Tsuen Wan", "Tuen Mun", "Yuen Long", "North", "Tai Po", "Sha Tin", "Sai Kung", "Kwai Tsing", "Islands"]
     
     var body: some View {
         NavigationView {
@@ -36,7 +36,7 @@ struct CommunityRankingView: View {
                     .padding()
                 }
             }
-            .navigationTitle("社区排名")
+            .navigationTitle("Community Ranking")
             .refreshable {
                 await rankingService.refreshRankings()
             }
@@ -44,11 +44,13 @@ struct CommunityRankingView: View {
     }
     
     private var filteredRankings: [CommunityRanking] {
-        if selectedDistrict == "全部" {
+        if selectedDistrict == "All Districts" {
             return rankingService.rankings
         }
         return rankingService.rankings.filter { $0.district == selectedDistrict }
     }
+    
+    @StateObject private var rankingService = CommunityRankingService()
 }
 
 // MARK: - 地区筛选按钮
@@ -120,7 +122,7 @@ struct RankingCard: View {
                         .foregroundColor(.green)
                         .font(.caption)
                     
-                    Text("\(ranking.weeklyEmission, specifier: "%.1f") kg CO₂/周")
+                    Text(String(format: "%.1f kg CO₂/week", ranking.weeklyEmission))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -135,7 +137,7 @@ struct RankingCard: View {
                     .fontWeight(.bold)
                     .foregroundColor(.green)
                 
-                Text("积分")
+                Text("points")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -184,24 +186,24 @@ class CommunityRankingService: ObservableObject {
     
     private func generateMockRankings() {
         let mockUsers = [
-            ("环保达人", "中西区", 1250, 8.5),
-            ("绿色生活", "湾仔区", 1180, 9.2),
-            ("地球守护者", "东区", 1150, 7.8),
-            ("环保先锋", "南区", 1120, 8.9),
-            ("绿色战士", "油尖旺区", 1080, 9.5),
-            ("环保专家", "深水埗区", 1050, 8.1),
-            ("地球朋友", "九龙城区", 1020, 8.7),
-            ("绿色天使", "黄大仙区", 980, 9.0),
-            ("环保使者", "观塘区", 950, 8.3),
-            ("绿色梦想", "荃湾区", 920, 8.6),
-            ("环保英雄", "屯门区", 890, 9.1),
-            ("绿色希望", "元朗区", 860, 8.4),
-            ("环保战士", "北区", 830, 8.8),
-            ("绿色未来", "大埔区", 800, 8.2),
-            ("环保之星", "沙田区", 770, 8.9),
-            ("绿色生活家", "西贡区", 740, 8.5),
-            ("环保达人2", "葵青区", 710, 8.7),
-            ("绿色守护者", "离岛区", 680, 8.3)
+            ("Eco Master", "Central & Western", 1250, 8.5),
+            ("Green Life", "Wan Chai", 1180, 9.2),
+            ("Earth Guardian", "Eastern", 1150, 7.8),
+            ("Eco Pioneer", "Southern", 1120, 8.9),
+            ("Green Warrior", "Yau Tsim Mong", 1080, 9.5),
+            ("Eco Expert", "Sham Shui Po", 1050, 8.1),
+            ("Earth Friend", "Kowloon City", 1020, 8.7),
+            ("Green Angel", "Wong Tai Sin", 980, 9.0),
+            ("Eco Ambassador", "Kwun Tong", 950, 8.3),
+            ("Green Dream", "Tsuen Wan", 920, 8.6),
+            ("Eco Hero", "Tuen Mun", 890, 9.1),
+            ("Green Hope", "Yuen Long", 860, 8.4),
+            ("Eco Warrior", "North", 830, 8.8),
+            ("Green Future", "Tai Po", 800, 8.2),
+            ("Eco Star", "Sha Tin", 770, 8.9),
+            ("Green Life", "Sai Kung", 740, 8.5),
+            ("Eco Master 2", "Kwai Tsing", 710, 8.7),
+            ("Green Guardian", "Islands", 680, 8.3)
         ]
         
         rankings = mockUsers.enumerated().map { index, user in
@@ -220,8 +222,7 @@ class CommunityRankingService: ObservableObject {
 
 // MARK: - 个人档案视图
 struct ProfileView: View {
-    @EnvironmentObject var ecoService: EcoChallengeService
-    @State private var userProfile: UserEcoProfile?
+    @EnvironmentObject var dataManager: DataManager
     @State private var showingSettings = false
     
     var body: some View {
@@ -229,13 +230,13 @@ struct ProfileView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     // 用户信息卡片
-                    UserInfoCard(profile: userProfile)
+                    UserInfoCard(profile: dataManager.userProfile)
                     
                     // 成就徽章
-                    AchievementsSection(profile: userProfile)
+                    AchievementsSection(profile: dataManager.userProfile)
                     
                     // 统计数据
-                    StatisticsSection(profile: userProfile)
+                    StatisticsSection(profile: dataManager.userProfile)
                     
                     // 环保目标
                     EcoGoalsSection()
@@ -244,7 +245,7 @@ struct ProfileView: View {
                 }
                 .padding()
             }
-            .navigationTitle("个人档案")
+            .navigationTitle("Personal Profile")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingSettings = true }) {
@@ -255,29 +256,7 @@ struct ProfileView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView()
             }
-            .onAppear {
-                loadUserProfile()
-            }
         }
-    }
-    
-    private func loadUserProfile() {
-        // 模拟加载用户档案
-        userProfile = UserEcoProfile(
-            userId: "user_123",
-            username: "环保达人",
-            totalPoints: 1250,
-            level: 8,
-            badges: [
-                EcoBadge(name: "交通达人", description: "连续7天使用公共交通", iconName: "car.fill", earnedDate: Date(), category: .transportation),
-                EcoBadge(name: "节能专家", description: "减少20%电力使用", iconName: "bolt.fill", earnedDate: Date(), category: .energy),
-                EcoBadge(name: "素食先锋", description: "连续3天素食", iconName: "fork.knife", earnedDate: Date(), category: .food)
-            ],
-            weeklyEmission: 8.5,
-            monthlyEmission: 35.2,
-            yearlyEmission: 420.8,
-            joinDate: Calendar.current.date(byAdding: .month, value: -3, to: Date()) ?? Date()
-        )
     }
 }
 
@@ -294,11 +273,11 @@ struct UserInfoCard: View {
                     .foregroundColor(.green)
                 
                 VStack(spacing: 4) {
-                    Text(profile?.username ?? "用户")
+                    Text(profile?.username ?? "User")
                         .font(.title2)
                         .fontWeight(.bold)
                     
-                    Text(profile?.levelTitle ?? "环保新手")
+                    Text(profile?.levelTitle ?? "Eco Novice")
                         .font(.subheadline)
                         .foregroundColor(.green)
                         .fontWeight(.medium)
@@ -313,7 +292,7 @@ struct UserInfoCard: View {
                         .fontWeight(.bold)
                         .foregroundColor(.green)
                     
-                    Text("总积分")
+                    Text("Total Points")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -324,18 +303,18 @@ struct UserInfoCard: View {
                         .fontWeight(.bold)
                         .foregroundColor(.blue)
                     
-                    Text("等级")
+                    Text("Level")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
                 
                 VStack {
-                    Text("\(profile?.joinDate.timeIntervalSinceNow ?? 0, specifier: "%.0f")")
+                    Text(String(format: "%.0f", profile?.joinDate.timeIntervalSinceNow ?? 0))
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.orange)
                     
-                    Text("加入天数")
+                    Text("Join Days")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -354,7 +333,7 @@ struct AchievementsSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("成就徽章")
+            Text("Achievements")
                 .font(.headline)
                 .fontWeight(.semibold)
             
@@ -402,14 +381,14 @@ struct StatisticsSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("环保统计")
+            Text("Eco Statistics")
                 .font(.headline)
                 .fontWeight(.semibold)
             
             VStack(spacing: 12) {
-                StatisticRow(title: "本周排放", value: "\(profile?.weeklyEmission ?? 0, specifier: "%.1f") kg CO₂")
-                StatisticRow(title: "本月排放", value: "\(profile?.monthlyEmission ?? 0, specifier: "%.1f") kg CO₂")
-                StatisticRow(title: "本年排放", value: "\(profile?.yearlyEmission ?? 0, specifier: "%.1f") kg CO₂")
+                StatisticRow(title: "Weekly Emission", value: String(format: "%.1f kg CO₂", profile?.weeklyEmission ?? 0))
+                StatisticRow(title: "Monthly Emission", value: String(format: "%.1f kg CO₂", profile?.monthlyEmission ?? 0))
+                StatisticRow(title: "Yearly Emission", value: String(format: "%.1f kg CO₂", profile?.yearlyEmission ?? 0))
             }
         }
         .padding()
@@ -446,20 +425,20 @@ struct EcoGoalsSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("环保目标")
+            Text("Eco Goals")
                 .font(.headline)
                 .fontWeight(.semibold)
             
             VStack(spacing: 16) {
                 GoalProgressView(
-                    title: "周目标",
+                    title: "Weekly Goal",
                     current: 8.5,
                     target: weeklyGoal,
                     unit: "kg CO₂"
                 )
                 
                 GoalProgressView(
-                    title: "月目标",
+                    title: "Monthly Goal",
                     current: 35.2,
                     target: monthlyGoal,
                     unit: "kg CO₂"
@@ -493,7 +472,7 @@ struct GoalProgressView: View {
                 
                 Spacer()
                 
-                Text("\(current, specifier: "%.1f") / \(target, specifier: "%.1f") \(unit)")
+                Text(String(format: "%.1f / %.1f %@", current, target, unit))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -511,47 +490,47 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section("账户") {
+                Section("Account") {
                     HStack {
                         Image(systemName: "person.fill")
-                        Text("编辑档案")
+                        Text("Edit Profile")
                     }
                     
                     HStack {
                         Image(systemName: "bell.fill")
-                        Text("通知设置")
+                        Text("Notification Settings")
                     }
                 }
                 
-                Section("隐私") {
+                Section("Privacy") {
                     HStack {
                         Image(systemName: "lock.fill")
-                        Text("隐私设置")
+                        Text("Privacy Settings")
                     }
                     
                     HStack {
                         Image(systemName: "eye.fill")
-                        Text("数据分享")
+                        Text("Data Sharing")
                     }
                 }
                 
-                Section("关于") {
+                Section("About") {
                     HStack {
                         Image(systemName: "info.circle.fill")
-                        Text("关于应用")
+                        Text("About App")
                     }
                     
                     HStack {
                         Image(systemName: "questionmark.circle.fill")
-                        Text("帮助与支持")
+                        Text("Help & Support")
                     }
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("完成") {
+                    Button("Done") {
                         dismiss()
                     }
                 }

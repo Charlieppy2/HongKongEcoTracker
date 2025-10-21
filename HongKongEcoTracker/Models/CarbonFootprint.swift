@@ -103,9 +103,9 @@ struct EcoChallenge: Codable, Identifiable {
     let category: ChallengeCategory
     let points: Int
     let duration: Int // days
-    let isCompleted: Bool
-    let startDate: Date?
-    let endDate: Date?
+    var isCompleted: Bool
+    var startDate: Date?
+    var endDate: Date?
     
     enum ChallengeCategory: String, CaseIterable, Codable {
         case transportation = "交通"
@@ -113,6 +113,17 @@ struct EcoChallenge: Codable, Identifiable {
         case food = "食物"
         case waste = "废物"
         case lifestyle = "生活方式"
+    }
+    
+    init(title: String, description: String, category: ChallengeCategory, points: Int, duration: Int, isCompleted: Bool = false, startDate: Date? = nil, endDate: Date? = nil) {
+        self.title = title
+        self.description = description
+        self.category = category
+        self.points = points
+        self.duration = duration
+        self.isCompleted = isCompleted
+        self.startDate = startDate
+        self.endDate = endDate
     }
 }
 

@@ -3,9 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>zh-HK</string>
+	</array>
 	<key>CFBundleDisplayName</key>
-	<string>香港环保追踪</string>
+	<string>Hong Kong Eco Tracker</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -66,12 +71,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>此应用需要访问您的位置信息以提供基于位置的环保服务和社区功能。</string>
+	<string>This app needs access to your location to provide location-based eco services and community features.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>此应用需要访问您的位置信息以提供基于位置的环保服务和社区功能。</string>
+	<string>This app needs access to your location to provide location-based eco services and community features.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>此应用需要访问相机以扫描环保设施和分享环保行动。</string>
+	<string>This app needs access to camera to scan eco facilities and share eco actions.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>此应用需要访问相册以保存和分享环保照片。</string>
+	<string>This app needs access to photo library to save and share eco photos.</string>
 </dict>
 </plist>
