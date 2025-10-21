@@ -16,11 +16,19 @@ class LocalizationManager: ObservableObject {
             let systemLanguage = Locale.current.language.languageCode?.identifier ?? "en"
             currentLanguage = systemLanguage.hasPrefix("zh") ? "zh-HK" : "en"
         }
+        
+        // 初始化时设置Bundle语言
+        Bundle.setLanguage(currentLanguage)
     }
     
     // MARK: - 获取本地化字符串
     func localizedString(for key: String, comment: String = "") -> String {
-        return NSLocalizedString(key, comment: comment)
+        // 使用当前语言设置获取本地化字符串
+        guard let path = Bundle.main.path(forResource: currentLanguage, ofType: "lproj"),
+              let bundle = Bundle(path: path) else {
+            return NSLocalizedString(key, comment: comment)
+        }
+        return bundle.localizedString(forKey: key, value: key, table: nil)
     }
     
     // MARK: - 切换语言

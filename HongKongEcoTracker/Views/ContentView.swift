@@ -61,7 +61,11 @@ struct ContentView: View {
         .accentColor(.green)
         .preferredColorScheme(.light)
         .onReceive(NotificationCenter.default.publisher(for: .languageChanged)) { _ in
-            // 语言改变时刷新UI
+            // 语言改变时强制刷新UI
+            DispatchQueue.main.async {
+                // 触发UI更新
+                localizationManager.objectWillChange.send()
+            }
         }
     }
 }
